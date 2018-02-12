@@ -131,6 +131,7 @@ public final class Utilities {
     public static final String DESKTOP_SHOW_QUICKSPACE = "pref_show_quickspace";
     public static final String SHOW_WORKSPACE_GRADIENT = "pref_show_workspace_grad";
     public static final String SHOW_HOTSEAT_GRADIENT = "pref_show_hotseat_grad";
+    public static final String ICON_SIZE = "pref_icon_size";
 
     /**
      * Indicates if the device has a debug build. Should only be used to store additional info or
@@ -764,6 +765,32 @@ public final class Utilities {
                 context.getSystemService(KeyguardManager.class) :
                 (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
         return manager.isKeyguardSecure();
+    }
+
+    public static float getIconSizeModifier(Context context) {
+        String saved = getPrefs(context).getString(ICON_SIZE, "average");
+        float offset;
+        switch (saved) {
+            case "extrasmall":
+                offset = 0.75F;
+                break;
+            case "small":
+                offset = 0.90F;
+                break;
+            case "average":
+                offset = 1.00F;
+                break;
+            case "large":
+                offset = 1.10F;
+                break;
+            case "extralarge":
+                offset = 1.25F;
+                break;
+            default:
+                offset = 1.00F;
+                break;
+        }
+        return offset;
     }
 
     public static void restart(final Context context) {
