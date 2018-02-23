@@ -43,6 +43,8 @@ import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.Preference.OnPreferenceChangeListener;
 import androidx.preference.PreferenceFragment;
+import androidx.preference.ListPreference;
+import androidx.preference.Preference.OnPreferenceChangeListener;
 import androidx.preference.PreferenceFragment.OnPreferenceStartFragmentCallback;
 import androidx.preference.PreferenceFragment.OnPreferenceStartScreenCallback;
 import androidx.preference.PreferenceGroup.PreferencePositionCallback;
@@ -156,6 +158,39 @@ public class SettingsHomescreen extends Activity
                     screen.removePreference(preference);
                 }
             }
+
+            final ListPreference gridColumns = (ListPreference) findPreference(Utilities.GRID_COLUMNS);
+            gridColumns.setSummary(gridColumns.getEntry());
+            gridColumns.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    int index = gridColumns.findIndexOfValue((String) newValue);
+                    gridColumns.setSummary(gridColumns.getEntries()[index]);
+                    Utilities.restart(getActivity());
+                    return true;
+                }
+            });
+
+            final ListPreference gridRows = (ListPreference) findPreference(Utilities.GRID_ROWS);
+            gridRows.setSummary(gridRows.getEntry());
+            gridRows.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    int index = gridRows.findIndexOfValue((String) newValue);
+                    gridRows.setSummary(gridRows.getEntries()[index]);
+                    Utilities.restart(getActivity());
+                    return true;
+                }
+            });
+
+            final ListPreference hotseatColumns = (ListPreference) findPreference(Utilities.HOTSEAT_ICONS);
+            hotseatColumns.setSummary(hotseatColumns.getEntry());
+            hotseatColumns.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    int index = hotseatColumns.findIndexOfValue((String) newValue);
+                    hotseatColumns.setSummary(hotseatColumns.getEntries()[index]);
+                    Utilities.restart(getActivity());
+                    return true;
+                }
+            });
 
             ListPreference dateFormat = (ListPreference) findPreference(Utilities.DATE_FORMAT_KEY);
             dateFormat.setSummary(dateFormat.getEntry());
